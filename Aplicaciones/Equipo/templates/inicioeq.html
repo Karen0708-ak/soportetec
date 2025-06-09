@@ -1,0 +1,97 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block body %}
+<br>
+<h1 class="text-center">Listado de Equipos</h1>
+
+<hr>
+<table class="table table-bordered table-striped table-hover ">
+    <thead>
+        <tr class="table-success text-center">
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>MARCA</th>
+            <th>MODELO</th>
+            <th>PROCESADOR</th>
+            <th>FOTO</th>
+            <th>FICHA TECNOLÓGICA</th>
+            <th>>SISTEMA OPERTIVO</tr>
+            <th>ACCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for equipoTemporal in equipo %}
+            <tr>
+                <td>{{equipoTemporal.id}}</td>
+                <td>{{equipoTemporal.nombre}}</td>
+                <td>{{equipoTemporal.marca}}</td>
+                <td>{{equipoTemporal.modelo}}</td>
+                <td>{{equipoTemporal.procesador}}</td>
+                <td>
+                    {% if equipoTemporal.fotoe %}
+                        <img src="{{equipoTemporal.fotoe.url}}" alt="" height="80px">
+                    {% else %}
+                        Ninguna
+                    {% endif %}
+                </td>
+                <td>
+                    {% if equipoTemporal.fichatec %}
+                        
+                        <!-- Ver el PDF directamente en la tabla -->
+                        <iframe 
+                            src="{{ equipoTemporal.fichatec.url }} " 
+                            width="300" 
+                            height="250"
+                            style="border: 1px solid #ddd; background: #f8f9fa;"
+                            title="Vista previa del documento"
+                            type="application/pdf">
+                        </iframe>
+                        <br>
+                        <br>
+                        <p>{{ equipoTemporal.fichatec.name|slice:"5:" }}</p>
+                        <br>
+                        <a href="{{ equipoTemporal.fichatec.url }}" download class="btn btn-sm btn-primary">Descargar</a>
+                        <a href="{{ equipoTemporal.fichatec.url }}" target="_blank" class="btn btn-sm btn-secondary">Ver en pestaña</a>
+                    {% else %}
+                        Ninguna
+                    {% endif %}
+                </td>
+                <td>{{equipoTemporal.sistema_operativo.nombre}}</td>
+                <td>
+                    <a href="editarEquipo/{{equipoTemporal.id}}" class="btn btn-outline-warning">
+                        <i class="fa fa-pen"></i>
+                    </a>
+                    <a href="#" class="btn btn-outline-danger" onclick="confirmarEliminacion('{{muestreoTemporal.id}}')">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    <script>
+                        function confirmarEliminacion(id) {
+                            Swal.fire({
+                            title: '¿Estás seguro?',
+                            text: '¡Esta acción no se puede deshacer!',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, eliminar',
+                            cancelButtonText: 'Cancelar'
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = `eliminarMuestreo/${id}`;
+                            }
+                            });
+                        }
+                        </script>  
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="text-center ">
+    <a href="nuevoMuestreo" class="btn btn-primary " >
+        Agregar Muestreo
+    </a>
+</div>
+<br>
+<br>
+{% endblock %}
