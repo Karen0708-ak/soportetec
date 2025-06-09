@@ -6,8 +6,8 @@ from django.contrib import messages
 
 # LISTADO DE SISTEMAS OPERATIVOS
 def inicio(request):
-    sistemas_operativos = SistemaOperativo.objects.all()
-    return render(request, "inicio.html", {'sistemas_operativos': sistemas_operativos})
+    lsistemas_operativos = SistemaOperativo.objects.all()
+    return render(request, "listarSO.html", {'sistemas_operativos': lsistemas_operativos})
 
 # FORMULARIO NUEVO SISTEMA OPERATIVO
 def nuevoSO(request):
@@ -25,7 +25,7 @@ def guardarSO(request):
         )
 
         messages.success(request, "Sistema Operativo guardado exitosamente")
-        return redirect('/')
+        return redirect('listarSO')
     return redirect('/')
 
 # ELIMINAR SISTEMA OPERATIVO

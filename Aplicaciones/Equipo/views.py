@@ -6,10 +6,10 @@ from django.contrib import messages
 
 def inicio(request):
     listadoEquipo=Equipo.objects.all()
-    return render(request,"inicioeqtml",{'equipo':listadoEquipo})
+    return render(request,"inicioeq.html",{'equipo':listadoEquipo})
 def nuevoEquipo(request):
     rsistema_operatvo=SistemaOperativo.objects.all()
-    return render(request,"nuevoMuestreo.html",{'sistema_operativo':rsistema_operatvo})
+    return render(request,"nuevoEquipo.html",{'sistema_operativo':rsistema_operatvo})
 
 def guardarEquipo(request):
     nombre = request.POST["nombre"]
