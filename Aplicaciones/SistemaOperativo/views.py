@@ -2,59 +2,58 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import SistemaOperativo
 from django.contrib import messages
 
-# Create your views here.
-
-# LISTADO DE SISTEMAS OPERATIVOS
+# LISTAR
 def inicio(request):
-    lsistemas_operativos = SistemaOperativo.objects.all()
-    return render(request, "listarSO.html", {'sistemas_operativos': lsistemas_operativos})
+    sistemas_operativos = SistemaOperativo.objects.all()
+    return render(request, "listarSO.html", {'sistemas_operativos': sistemas_operativos})
 
-# FORMULARIO NUEVO SISTEMA OPERATIVO
+# FORM NUEVO
 def nuevoSO(request):
     return render(request, "nuevoSO.html")
 
-# GUARDAR SISTEMA OPERATIVO
+# GUARDAR
 def guardarSO(request):
-    if request.method == "POST":
-        nombre = request.POST["nombre"]
-        version = request.POST["version"]
+    nombre = request.POST["nombre"]
+    version = request.POST["version"]
+    documentacion = request.FILES.get("documentacion")
 
-        SistemaOperativo.objects.create(
-            nombre=nombre,
-            version=version
-        )
+    SistemaOperativo.objects.create(
+        nombre=nombre,
+        version=version,
+        documentacion=documentacion
+    )
 
-        messages.success(request, "Sistema Operativo guardado exitosamente")
-        return redirect('listarSO')
-    return redirect('/')
+    messages.success(request, "Sistema Operativo guardado exitosamente")
+    return redirect('listarSO')
 
-# ELIMINAR SISTEMA OPERATIVO
-def eliminarSO(request, id):
-    soEliminar = get_object_or_404(SistemaOperativo, id=id)
-    soEliminar.delete()
-    messages.success(request, "Sistema Operativo eliminado exitosamente")
-    return redirect('/')
-
-# FORMULARIO DE EDICIÓN
+# FORM EDITAR
 def editarSO(request, id):
     soEditar = get_object_or_404(SistemaOperativo, id=id)
     return render(request, "editarSO.html", {'soEditar': soEditar})
 
 # PROCESAR EDICIÓN
 def procesarEdicionSO(request):
-    if request.method == "POST":
-        id = request.POST["id"]
-        nombre = request.POST["nombre"]
-        version = request.POST["version"]
+    id = request.POST["id"]
+    nombre = request.POST["nombre"]
+    version = request.POST["version"]
+    documentacion = request.FILES.get("documentacion")
 
-        try:
-            so = SistemaOperativo.objects.get(id=id)
-            so.nombre = nombre
-            so.version = version
-            so.save()
-            messages.success(request, "Sistema Operativo actualizado exitosamente")
-        except SistemaOperativo.DoesNotExist:
-            messages.error(request, "Sistema Operativo no encontrado")
+    so = SistemaOperativo.objects.get(id=id)
+    so.nombre = nombre
+    so.version = version
 
-        return redirect('/')
-    return redirect('/')
+    if documentacion:
+        so.documentacion = documentacion 
+
+    so.save()
+
+    messages.success(request, "Sistema Operativo actualizado exitosamente")
+    return redirect('listarSO')
+
+# ELIMINAR
+def eliminarSO(request, id):
+    soEliminar = get_object_or_404(SistemaOperativo, id=id)
+    soEliminar.delete()
+
+    messages.success(request, "Sistema Operativo eliminado exitosamente")
+    return redirect('listarSO')
