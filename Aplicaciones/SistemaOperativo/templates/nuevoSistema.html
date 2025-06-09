@@ -1,0 +1,58 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<br>
+<div class="row">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6 bg-light">
+        <h1>Nuevo Sistema Operativo</h1>
+        <form action="guardarSO" id="frm_nuevo_so" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="nombre"><b>Nombre (*):</b></label><br>
+            <input placeholder="Ingrese el nombre del sistema operativo" class="form-control" type="text" name="nombre" id="nombre">
+            <br>
+
+            <label for="version"><b>Versión (*):</b></label><br>
+            <input placeholder="Ingrese la versión" class="form-control" type="text" name="version" id="version">
+            <br>
+
+            <button type="submit" class="btn btn-success">GUARDAR</button>
+            <a href="/" class="btn btn-outline-danger">Cancelar</a>
+        </form>
+    </div>
+
+    <div class="col-md-3"></div>
+</div>
+
+<!-- Validación JavaScript -->
+<script>
+    $("#frm_nuevo_so").validate({
+        rules: {
+            "nombre": {
+                required: true,
+                minlength: 3,
+                maxlength: 50
+            },
+            "version": {
+                required: true,
+                minlength: 1,
+                maxlength: 20
+            }
+        },
+        messages: {
+            "nombre": {
+                required: "Por favor ingrese el nombre del sistema operativo",
+                minlength: "Mínimo 3 caracteres",
+                maxlength: "Máximo 50 caracteres"
+            },
+            "version": {
+                required: "Por favor ingrese la versión",
+                minlength: "Mínimo 1 carácter",
+                maxlength: "Máximo 20 caracteres"
+            }
+        }
+    });
+</script>
+
+{% endblock %}
