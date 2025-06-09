@@ -5,20 +5,20 @@
     <div class="col-md-3" ></div>
     <div class="col-md-6 bg-black" >
         <h1 >Nuevo Equipo</h1>
-        <form action="guardarEquipo" method="post">
+        <form action="guardarEquipo" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             
             <label for="nombre">Nombre(*)</label><br>
-            <input class="form-control" type="text" name="nombre" id="nombre" required><br>
+            <input placeholder="Ingrese el nombre del equipo" class="form-control" type="text" name="nombre" id="nombre" required><br>
 
             <label for="marca">Marca(*)</label><br>
-            <input class="form-control " type="text" name="marca" id="marca" required><br>
+            <input placeholder="Ejem:HP" class="form-control " type="text" name="marca" id="marca" required><br>
 
             <label for="modelo">Modelo(*)</label><br>
-            <input class="form-control " type="text" name="modelo" id="modelo" required><br>
+            <input placeholder="Ejem:HP HP Laptop 15-ef2xxx" class="form-control " type="text" name="modelo" id="modelo" required><br>
 
             <label for="procesador">Procesador(*)</label><br>
-            <input class="form-control" type="text" name="procesador" id="procesador" required><br>
+            <input placeholder="Ejem:AMD Ryzen™ 7 5700U with Radeon™ Graphics × 16" class="form-control" type="text" name="procesador" id="procesador" required><br>
 
             <label for="">Foto del equipo(*)</label>
             <input type="file" name="fotoe" id="fotoe" class="form-control">
