@@ -1,0 +1,63 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block body %}
+<div class="row" >
+    <div class="col-md-3" ></div>
+    <div class="col-md-6 bg-black" >
+        <h1 >Nuevo Equipo</h1>
+        <form action="guardarEquipo" method="post">
+            {% csrf_token %}
+            
+            <label for="nombre">Nombre(*)</label><br>
+            <input class="form-control" type="text" name="nombre" id="nombre" required><br>
+
+            <label for="marca">Marca(*)</label><br>
+            <input class="form-control " type="text" name="marca" id="marca" required><br>
+
+            <label for="modelo">Modelo(*)</label><br>
+            <input class="form-control " type="text" name="modelo" id="modelo" required><br>
+
+            <label for="procesador">Procesador(*)</label><br>
+            <input class="form-control" type="text" name="procesador" id="procesador" required><br>
+
+            <label for="">Foto del equipo(*)</label>
+            <input type="file" name="fotoe" id="fotoe" class="form-control">
+
+            <br>
+            <label for="">Ficha Técnica(PDF)*</label>
+            <input class="form-control" type="file" name="fichatec" id="fichatec" >
+            <br>
+
+            <label for="sistema_operativo" >Sistema Operativo(*)</label><br>
+            <select name="sistema_operativo" id="sistema_operativo">
+                <option value="">Seleccione un Sistema Operativo</option>
+                {% for e in sistema_operativo%}
+                    <option value="{{e.id}}">{{e.nombre}}</option>
+                {% endfor%}
+            </select><br>
+
+            <button class="btn btn-success" type="submit">Guardar</button>
+            <a class="btn btn-danger" href="{% url 'inicioeq' %}">Cancelar</a><br><br>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<script>
+    $("#fotoe").fileinput({
+            language: "es",
+            allowedFileExtensions: ["png|jpg|jpeg"],
+            showCaption: false,
+            dropZoneEnabled: true,
+            showClose: false
+    });
+</script>
+<script>
+    $("#fichatec").fileinput({
+            language: "es",
+            allowedFileExtensions: ["pdf"],
+            showCaption: false,
+            dropZoneEnabled: true,
+            showClose: false
+    });
+</script>
+{% endblock %}
