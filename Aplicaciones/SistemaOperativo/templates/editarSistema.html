@@ -1,0 +1,32 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<div class="row">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6 bg-light">
+        <h1>Editar Sistema Operativo</h1>
+
+        <form action="/procesarEdicionSO" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ soEditar.id }}">
+
+            <label for="nombre">Nombre:</label><br>
+            <input class="form-control" type="text" name="nombre" id="nombre" value="{{ soEditar.nombre }}">
+            <br>
+
+            <label for="version">Versión:</label><br>
+            <input class="form-control" type="text" name="version" id="version" value="{{ soEditar.version }}">
+            <br>
+
+            <button type="submit" class="btn btn-warning">
+                <i class="fa fa-pen"></i> Editar
+            </button>
+            <a href="/" class="btn btn-outline-danger">
+                <i class="fa fa-times"></i> Cancelar
+            </a>
+        </form>
+    </div>
+
+    <div class="col-md-3"></div>
+</div>
+{% endblock %}
