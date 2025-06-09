@@ -1,0 +1,63 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+
+<h1 class="text-center">Listado de Sistemas Operativos</h1>
+<hr>
+<br>
+<div class="text-end">
+  <a href="nuevoSO" class="btn btn-primary text-right">Agregar Sistema Operativo</a>
+</div>
+<br>
+
+<table class="table table-bordered table-striped table-hover" id="tbl_so">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>NOMBRE</th>
+      <th>VERSIÓN</th>
+      <th>ACCIONES</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for so in sistemas_operativos %}
+    <tr>
+      <td>{{ so.id }}</td>
+      <td>{{ so.nombre }}</td>
+      <td>{{ so.version }}</td>
+      <td>
+        <a class="btn btn-outline-warning" href="editarSO/{{ so.id }}">
+          <i class="fa fa-pen"></i>
+        </a>
+        <a href="#" onclick="eliminarSO('{{ so.id }}');"
+           class="btn btn-outline-danger">
+          <i class="fa fa-trash"></i>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<br><br><br><br><br><br>
+<script>
+    function eliminarSO(id) {
+        Swal.fire({
+            title: "CONFIRMACIÓN",
+            text: "¿Está seguro de eliminar el sistema operativo?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, Eliminar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/eliminarSO/" + id;
+            }
+        });
+    }
+</script>
+<script>
+  let table = new DataTable('#tbl_so');
+</script>
+
+{% endblock %}
