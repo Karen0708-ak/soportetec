@@ -1,9 +1,10 @@
-{% extends './plantilla.html' %}
-{% block contenido %}
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block body %}
 <div class="row">
     <div class="col-md-3"></div>
 
-    <div class="col-md-6 bg-light">
+    <div class="col-md-6 bg-black">
         <h1>Editar Sistema Operativo</h1>
 
         <form action="/procesarEdicionSO" method="post">
